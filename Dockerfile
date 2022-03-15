@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN flutter doctor
+RUN chown :docker -R . && flutter doctor
 
 EXPOSE 3000
 

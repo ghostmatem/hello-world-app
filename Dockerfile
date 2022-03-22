@@ -1,15 +1,16 @@
-FROM openjdk:8
+FROM androidsdk/android-30
 
-ARG FLUTTER_VERSION=2.10.3
+FROM fischerscode/flutter
 
-RUN curl https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz --output /flutter.tar.xz && \
-	tar xf flutter.tar.xz && \
-	rm flutter.tar.xz
+USER root:root
 
-WORKDIR /app
+ENV APP_PATH=/home/app
+
+WORKDIR ${APP_PATH}
 
 COPY . .
 
-RUN flutter doctor
+RUN dart pub global activate junitreport
 
-CMD [ "flutter", "test" ]
+ENTRYPOINT bash entrypoint.sh
+
